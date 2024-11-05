@@ -1,0 +1,22 @@
+services:
+  preparation:
+    container_name: preparation
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: preparation
+    image: preparation
+    environment:
+      PORT: ${PORT}
+      DEVICE: ${DEVICE}
+      VRAM_MODE: ${VRAM_MODE}
+      WARMUP: ${WARMUP}
+    working_dir: /app/image_server
+    restart: always
+    ports:
+      - 8888:${PORT}
+    volumes:
+      - ./cache:/app/cache
+      - ./ComfyUI:/app/image_server/ComfyUI
+      - ./docker/docker-compose.yaml:/app/docker-compose.yaml
+      - ./docker/Dockerfile:/app/Dockerfile
