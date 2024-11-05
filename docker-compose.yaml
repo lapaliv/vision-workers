@@ -36,6 +36,8 @@ services:
       - 8188:8188
     volumes:
       - ./cache:/app/cache
+    networks:
+      - image_server
 
   app:
     container_name: app
@@ -58,3 +60,5 @@ services:
       - ${PORT:-8888}:8888
     volumes:
       - ./cache:/app/cache
+    networks:
+      - image_server
