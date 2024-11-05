@@ -62,3 +62,8 @@ services:
       - ./cache:/app/cache
     networks:
       - image_server
+
+networks:
+  image_server:
+    name: image_server
+    external: true
