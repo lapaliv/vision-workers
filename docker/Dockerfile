@@ -7,8 +7,9 @@ RUN #ln -s /app/image_server /app/server
 
 VOLUME [ "/app/cache", "/app/server" ]
 
-RUN chmod +x /app/server/setup.sh && \
-    chmod +x /app/server/entrypoint.sh
+RUN #chmod +x /app/server/setup.sh
+RUN #chmod +x /app/server/entrypoint.sh
+RUN #chmod +x /app/server/ComfyUI/entrypoint.sh
 
 RUN apt install -y nano
 
