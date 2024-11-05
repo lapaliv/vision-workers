@@ -26,7 +26,7 @@ ENTRYPOINT ["tail", "-f", "/dev/null"]
 FROM base as app
 WORKDIR /app/image_server
 
-COPY ./wait-for-setup.sh /wait-for-setup.sh
+COPY ./docker/wait-for-setup.sh /wait-for-setup.sh
 RUN chmod +x /wait-for-setup.sh
 
 ENTRYPOINT [ "/app/image_server/entrypoint.sh" ]
@@ -34,7 +34,7 @@ ENTRYPOINT [ "/app/image_server/entrypoint.sh" ]
 FROM base as comfy
 WORKDIR /app/image_server/ComfyUI
 
-COPY ./wait-for-setup.sh /wait-for-setup.sh
+COPY ./docker/wait-for-setup.sh /wait-for-setup.sh
 RUN chmod +x /wait-for-setup.sh
 
 ENTRYPOINT [ "/app/image_server/ComfyUI/entrypoint.sh" ]
