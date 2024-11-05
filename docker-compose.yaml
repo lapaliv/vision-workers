@@ -1,11 +1,31 @@
 services:
-  preparation:
-    container_name: preparation
+  setup:
+    container_name: setup
     build:
       context: ./
       dockerfile: ./docker/Dockerfile
-      target: preparation
-    image: preparation
+      target: setup
+    image: setup
+    environment:
+      PORT: ${PORT:-8888}
+      DEVICE: ${DEVICE:-0}
+      VRAM_MODE: ${VRAM_MODE:--normalvram}
+      WARMUP: ${WARMUP:-true}
+    working_dir: /app
+    restart: always
+    ports:
+      - ${PORT:-8888}:8888
+    volumes:
+      - ./cache:/app/cache
+      - ./ComfyUI:/app/image_server/ComfyUI
+
+  app:
+    container_name: app
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      target: app
+    image: app
     environment:
       PORT: ${PORT:-8888}
       DEVICE: ${DEVICE:-0}
@@ -13,10 +33,32 @@ services:
       WARMUP: ${WARMUP:-true}
     working_dir: /app/image_server
     restart: always
+    depends_on:
+      - setup
     ports:
       - ${PORT:-8888}:8888
     volumes:
       - ./cache:/app/cache
       - ./ComfyUI:/app/image_server/ComfyUI
-      - ./docker/docker-compose.yaml:/app/docker-compose.yaml
-      - ./docker/Dockerfile:/app/Dockerfile
+
+  comfy:
+    container_name: comfy
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      target: comfy
+    image: comfy
+    depends_on:
+      - setup
+    environment:
+      PORT: ${PORT:-8888}
+      DEVICE: ${DEVICE:-0}
+      VRAM_MODE: ${VRAM_MODE:--normalvram}
+      WARMUP: ${WARMUP:-true}
+    working_dir: /app/image_server/ComfyUI
+    restart: always
+    ports:
+      - ${PORT:-8888}:8888
+    volumes:
+      - ./cache:/app/cache
+      - ./ComfyUI:/app/image_server/ComfyUI
