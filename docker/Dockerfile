@@ -82,7 +82,7 @@ ENV HF_HUB_CACHE=/app/cache/hub
 FROM base as setup
 WORKDIR /app
 
-RUN #/usr/bin/bash /app/image_server/setup.sh
+RUN /usr/bin/bash /app/image_server/setup.sh
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
 
