@@ -15,7 +15,7 @@ services:
     restart: always
     volumes:
       - ./cache:/app/cache
-      - ./image_server:/server
+      - ./image_server:/app/server
 
   comfy:
     container_name: comfy
@@ -37,7 +37,7 @@ services:
       - 8188:8188
     volumes:
       - ./cache:/app/cache
-      - ./image_server:/server
+      - ./image_server:/app/server
     networks:
       - image_server
 
@@ -62,7 +62,7 @@ services:
       - ${PORT:-8888}:8888
     volumes:
       - ./cache:/app/cache
-      - ./image_server:/server
+      - ./image_server:/app/server
     networks:
       - image_server
 
