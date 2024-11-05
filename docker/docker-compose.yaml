@@ -31,7 +31,5 @@ services:
       WARMUP: ${WARMUP:-true}
     working_dir: /app/image_server
     restart: always
-    ports:
-      - ${PORT:-8888}:8888
     volumes:
       - /app:/app
