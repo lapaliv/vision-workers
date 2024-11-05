@@ -27,6 +27,6 @@ ENTRYPOINT [ "/app/image_server/entrypoint.sh" ]
 FROM base as comfy
 WORKDIR /app/image_server/ComfyUI
 
-RUN chmod +x /app/image_server/ComfyUI/entrypoint.sh
+RUN #chmod +x /app/image_server/ComfyUI/entrypoint.sh
 
 ENTRYPOINT [ "/app/image_server/ComfyUI/entrypoint.sh" ]
