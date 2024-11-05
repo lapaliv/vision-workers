@@ -12,7 +12,9 @@ RUN chmod +x /app/image_server/setup.sh && \
 RUN apt install -y nano
 
 FROM base as preparation
-RUN /usr/bin/bash /app/image_server/setup.sh
+WORKDIR /app
+RUN /usr/bin/bash /app/image_server/setup.sh && \
+    docker compose up -d
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
 
