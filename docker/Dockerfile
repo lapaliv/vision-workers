@@ -27,7 +27,7 @@ RUN echo \
 RUN sudo apt-get update
 RUN  sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-RUN docker compose up -d
+RUN #docker compose up -d
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
 
