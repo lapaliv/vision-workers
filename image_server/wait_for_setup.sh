@@ -9,14 +9,12 @@ echo "Waiting for 'setup' container to be ready..."
 
 # Запускаем цикл, который будет проверять контейнер на готовность
 while [ "$ELAPSED" -lt "$MAX_WAIT" ]; do
-    # Проверка состояния контейнера
-    if docker inspect -f '{{.State.Running}}' setup | grep "false" > /dev/null; then
-        echo "Setup complete! Starting app."
-        exit 0
+    if [ -f "/app/cache/setup.txt" ]; then
+      exit 0
     else
-        echo "Setup still in progress. Waiting for $SLEEP_INTERVAL seconds..."
-        ELAPSED=$((ELAPSED + SLEEP_INTERVAL))
-        sleep $SLEEP_INTERVAL
+      echo "Setup still in progress. Waiting for $SLEEP_INTERVAL seconds..."
+      ELAPSED=$((ELAPSED + SLEEP_INTERVAL))
+      sleep $SLEEP_INTERVAL
     fi
 done
 

@@ -20,6 +20,7 @@ WORKDIR /app
 
 RUN chmod +x /app/image_server/setup.sh
 RUN #/usr/bin/bash /app/image_server/setup.sh
+RUN touch /app/cache/setup.txt
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
 
