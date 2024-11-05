@@ -19,7 +19,7 @@ FROM base as setup
 WORKDIR /app
 
 RUN chmod +x /app/image_server/setup.sh
-RUN /usr/bin/bash /app/image_server/setup.sh
+RUN #/usr/bin/bash /app/image_server/setup.sh
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
 
