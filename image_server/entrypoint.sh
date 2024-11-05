@@ -1,12 +1,12 @@
 #!/bin/bash
-cleanup() {
-    echo "Stopping the ComfyUI server..."
-    kill $COMFY_SERVER_PID
-    wait $COMFY_SERVER_PID 2>/dev/null
-    echo "Both servers have been stopped."
-}
+#cleanup() {
+#    echo "Stopping the ComfyUI server..."
+#    kill $COMFY_SERVER_PID
+#    wait $COMFY_SERVER_PID 2>/dev/null
+#    echo "Both servers have been stopped."
+#}
 
-trap cleanup SIGINT SIGTERM
+#trap cleanup SIGINT SIGTERM
 
 echo "Starting the image server. First i'll download all the models..."
 # tODO: remove this
@@ -27,8 +27,8 @@ else
 fi
 cd ..
 
-COMFY_SERVER_PID=$!
-echo "ComfyUI server started with PID: $COMFY_SERVER_PID"
+#COMFY_SERVER_PID=$!
+#echo "ComfyUI server started with PID: $COMFY_SERVER_PID"
 sleep 5
 
 if [ "$warmup" = "true" ]
@@ -38,5 +38,5 @@ else
     sleep 1
 fi
 
-uvicorn main:app --host 0.0.0.0 --port $port
+uvicorn main:app --host 0.0.0.0 --port $port --timeout-graceful-shutdown 180
 cleanup
