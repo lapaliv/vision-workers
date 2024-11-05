@@ -16,27 +16,6 @@ services:
     volumes:
       - ./cache:/app/cache
 
-  app:
-    container_name: app
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile
-      target: app
-    image: app
-    environment:
-      PORT: ${PORT:-8888}
-      DEVICE: ${DEVICE:-0}
-      VRAM_MODE: ${VRAM_MODE:--normalvram}
-      WARMUP: ${WARMUP:-true}
-    working_dir: /app/image_server
-    restart: always
-    depends_on:
-      - setup
-    ports:
-      - ${PORT:-8888}:8888
-    volumes:
-      - ./cache:/app/cache
-
   comfy:
     container_name: comfy
     build:
@@ -53,5 +32,29 @@ services:
       WARMUP: ${WARMUP:-true}
     working_dir: /app/image_server
     restart: always
+    ports:
+      - 8188:8188
+    volumes:
+      - ./cache:/app/cache
+
+  app:
+    container_name: app
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: app
+    image: app
+    environment:
+      PORT: ${PORT:-8888}
+      DEVICE: ${DEVICE:-0}
+      VRAM_MODE: ${VRAM_MODE:--normalvram}
+      WARMUP: ${WARMUP:-true}
+    working_dir: /app/image_server
+    restart: always
+    depends_on:
+      - setup
+      - comfy
+    ports:
+      - ${PORT:-8888}:8888
     volumes:
       - ./cache:/app/cache
