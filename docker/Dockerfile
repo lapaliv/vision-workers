@@ -13,8 +13,9 @@ RUN apt install -y nano
 
 FROM base as preparation
 WORKDIR /app
-RUN /usr/bin/bash /app/image_server/setup.sh && \
-    docker compose up -d
+RUN /usr/bin/bash /app/image_server/setup.sh
+RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+RUN docker compose up -d
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
 
