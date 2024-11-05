@@ -40,6 +40,7 @@ services:
     volumes:
       - ./cache:/app/cache
       - ./ComfyUI:/app/image_server/ComfyUI
+      - ./docker/wait-for-setup.sh:/app/wait-for-setup.sh
 
   comfy:
     container_name: comfy
@@ -62,3 +63,4 @@ services:
     volumes:
       - ./cache:/app/cache
       - ./ComfyUI:/app/image_server/ComfyUI
+      - ./docker/wait-for-setup.sh:/app/wait-for-setup.sh

@@ -18,23 +18,23 @@ RUN apt install -y nano
 FROM base as setup
 WORKDIR /app
 
-RUN #/usr/bin/bash /app/image_server/setup.sh
 RUN chmod +x /app/image_server/setup.sh
+RUN #/usr/bin/bash /app/image_server/setup.sh
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
 
 FROM base as app
 WORKDIR /app/image_server
 
-COPY ./docker/wait-for-setup.sh /wait-for-setup.sh
-RUN chmod +x /wait-for-setup.sh
+RUN chmod +x /app/wait-for-setup.sh
+RUN bash /app/wait-for-setup.sh
 
 ENTRYPOINT [ "/app/image_server/entrypoint.sh" ]
 
 FROM base as comfy
 WORKDIR /app/image_server/ComfyUI
 
-COPY ./docker/wait-for-setup.sh /wait-for-setup.sh
-RUN chmod +x /wait-for-setup.sh
+RUN chmod +x /app/wait-for-setup.sh
+RUN bash /app/wait-for-setup.sh
 
 ENTRYPOINT [ "/app/image_server/ComfyUI/entrypoint.sh" ]
