@@ -23,7 +23,7 @@ services:
     container_name: app
     build:
       context: ./
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/Dockerfile
       target: app
     image: app
     environment:
@@ -45,7 +45,7 @@ services:
     container_name: comfy
     build:
       context: ./
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/Dockerfile
       target: comfy
     image: comfy
     depends_on:
