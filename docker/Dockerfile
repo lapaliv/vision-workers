@@ -26,6 +26,7 @@ ENTRYPOINT ["tail", "-f", "/dev/null"]
 FROM base as app
 WORKDIR /app/image_server
 
+RUN mv /app/ComfyUI /app/image_server/ComfyUI
 RUN #chmod +x /app/wait_for_setup.sh
 RUN #/usr/bin/bash /app/image_server/wait_for_setup.sh
 
@@ -34,6 +35,7 @@ ENTRYPOINT [ "/app/image_server/entrypoint.sh" ]
 FROM base as comfy
 WORKDIR /app/image_server/ComfyUI
 
+RUN mv /app/ComfyUI /app/image_server/ComfyUI
 RUN chmod +x /app/image_server/ComfyUI/entrypoint.sh
 RUN #chmod +x /app/wait_for_setup.sh
 RUN #/usr/bin/bash /app/image_server/wait_for_setup.sh
