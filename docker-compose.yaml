@@ -13,8 +13,6 @@ services:
       WARMUP: ${WARMUP:-true}
     working_dir: /app
     restart: always
-    ports:
-      - ${PORT:-8888}:8888
     volumes:
       - ./cache:/app/cache
       - ./ComfyUI:/app/image_server/ComfyUI
