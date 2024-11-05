@@ -15,7 +15,6 @@ services:
     restart: always
     volumes:
       - ./cache:/app/cache
-      - ./ComfyUI:/app/image_server/ComfyUI
 
   app:
     container_name: app
@@ -37,7 +36,6 @@ services:
       - ${PORT:-8888}:8888
     volumes:
       - ./cache:/app/cache
-      - ./ComfyUI:/app/ComfyUI
 
   comfy:
     container_name: comfy
@@ -57,4 +55,3 @@ services:
     restart: always
     volumes:
       - ./cache:/app/cache
-      - ./ComfyUI:/app/ComfyUI
