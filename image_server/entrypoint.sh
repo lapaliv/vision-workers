@@ -38,5 +38,5 @@ else
     sleep 1
 fi
 
-uvicorn main:app --host 0.0.0.0 --port $port --timeout-graceful-shutdown 180
-cleanup
+uvicorn main:app --host 0.0.0.0 --port $port
+#cleanup

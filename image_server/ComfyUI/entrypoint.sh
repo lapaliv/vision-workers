@@ -7,9 +7,9 @@ port=${PORT:-6919}
 
 if [ -n "$vram_mode" ]
 then
-    python main.py $vram_mode --cuda-device $device --disable-xformers &
+    python main.py $vram_mode --cuda-device $device --disable-xformers
 else
-    python main.py --disable-xformers  --cuda-device $device &
+    python main.py --disable-xformers  --cuda-device $device
 fi
 
-cleanup
+#cleanup
