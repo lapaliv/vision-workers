@@ -8,7 +8,7 @@
 
 #trap cleanup SIGINT SIGTERM
 
-echo "Starting the image server. First i'll download all the models..."
+#echo "Starting the image server. First i'll download all the models..."
 # tODO: remove this
 #chmod +x setup.sh
 #./setup.sh
