@@ -10,22 +10,22 @@
 
 echo "Starting the image server. First i'll download all the models..."
 # tODO: remove this
-chmod +x setup.sh
-./setup.sh
+#chmod +x setup.sh
+#./setup.sh
 
 vram_mode=${VRAM_MODE:-'--lowvram'}
 warmup=$(echo ${WARMUP:-false} | tr '[:upper:]' '[:lower:]')
 device=${DEVICE:-0}
 port=${PORT:-6919}
 
-cd ComfyUI
-if [ -n "$vram_mode" ]
-then
-    python main.py $vram_mode --cuda-device $device --disable-xformers &
-else
-    python main.py --disable-xformers  --cuda-device $device &
-fi
-cd ..
+#cd ComfyUI
+#if [ -n "$vram_mode" ]
+#then
+#    python main.py $vram_mode --cuda-device $device --disable-xformers &
+#else
+#    python main.py --disable-xformers  --cuda-device $device &
+#fi
+#cd ..
 
 #COMFY_SERVER_PID=$!
 #echo "ComfyUI server started with PID: $COMFY_SERVER_PID"
