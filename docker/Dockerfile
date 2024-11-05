@@ -1,9 +1,5 @@
 FROM corcelio/vision:image_server-latest as base
 
-#RUN git clone https://github.com/lapaliv/vision-workers.git /app/vision-workers && \
-#    mv /app/image_server /app/image_server_old && \
-#    mv /app/vision-workers/image_server /app/image_server
-
 RUN mv /app/image_server /app/image_server_old
 
 COPY --link ./image_server /app/image_server
@@ -18,6 +14,8 @@ RUN apt install -y nano
 FROM base as setup
 WORKDIR /app
 
+COPY --link ./ComfyUI /app/image_server/ComfyUI
+
 RUN chmod +x /app/image_server/setup.sh
 RUN #/usr/bin/bash /app/image_server/setup.sh
 
@@ -26,20 +24,14 @@ ENTRYPOINT ["tail", "-f", "/dev/null"]
 FROM base as app
 WORKDIR /app/image_server
 
-COPY --link /app/ComfyUI /app/image_server/ComfyUI
-RUN #mv /app/ComfyUI /app/image_server/ComfyUI
-RUN #chmod +x /app/wait_for_setup.sh
-RUN #/usr/bin/bash /app/image_server/wait_for_setup.sh
+COPY --link ./ComfyUI /app/image_server/ComfyUI
 
 ENTRYPOINT [ "/app/image_server/entrypoint.sh" ]
 
 FROM base as comfy
 WORKDIR /app/image_server/ComfyUI
 
-COPY --link /app/ComfyUI /app/image_server/ComfyUI
-RUN #mv /app/ComfyUI /app/image_server/ComfyUI
+COPY --link ./ComfyUI /app/image_server/ComfyUI
 RUN chmod +x /app/image_server/ComfyUI/entrypoint.sh
-RUN #chmod +x /app/wait_for_setup.sh
-RUN #/usr/bin/bash /app/image_server/wait_for_setup.sh
 
 ENTRYPOINT [ "/app/image_server/ComfyUI/entrypoint.sh" ]
