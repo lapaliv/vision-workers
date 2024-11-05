@@ -1,23 +1,108 @@
-FROM corcelio/vision:image_server-latest as base
+FROM nvidia/cuda:11.8.0-devel-ubuntu20.04 as base
 
-RUN mv /app/image_server /app/image_server_old
-#COPY --link ./image_server /app/image_server
-RUN #mv /app/image_server_old/ComfyUI /app/image_server/
-RUN #ln -s /app/image_server /app/server
+WORKDIR /app
 
-VOLUME [ "/app/cache", "/app/server" ]
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN #chmod +x /app/server/setup.sh
-RUN #chmod +x /app/server/entrypoint.sh
-RUN #chmod +x /app/server/ComfyUI/entrypoint.sh
+# PM2
+RUN apt-get update && apt-get install -y curl \
+    && curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g pm2
 
-RUN apt install -y nano
+# Installing necessary packages
+RUN apt-get update && apt-get install -y wget git
+
+# Installing Miniconda
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+    && chmod 700 Miniconda3-latest-Linux-x86_64.sh \
+    && ./Miniconda3-latest-Linux-x86_64.sh -b \
+    && rm Miniconda3-latest-Linux-x86_64.sh
+
+ENV PATH="/root/miniconda3/bin:${PATH}"
+RUN conda create -n venv_image python=3.10.13 -y
+ENV PATH="/root/miniconda3/envs/venv_image/bin:${PATH}"
+
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get -y full-upgrade \
+    && apt-get -y install python3-dev \
+    && apt-get install -y --no-install-recommends \
+    build-essential \
+    python3-pip\
+    apt-utils \
+    curl \
+    wget \
+    vim \
+    sudo \
+    git \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    python3-tk \
+    python3-dev \
+    git-lfs \
+    unzip \
+    nano \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y unzip
+
+COPY image_server/requirements.txt /app/requirements.txt
+RUN pip install --upgrade pip \
+    && pip install --upgrade pip setuptools==69.5.1 \
+    && pip install -r /app/requirements.txt  \
+    && pip install huggingface_hub[hf_transfer] \
+    && rm -rf /root/.cache/pip/*
+
+COPY --link image_server /app/image_server
+
+ENV APP_HOST=0.0.0.0
+ENV APP_PORT=8080
+ENV HF_HUB_ENABLE_HF_TRANSFER=1
+
+USER root
+ENV DEVICE=0
+ENV VRAM_MODE=--normalvram
+ENV WARMUP=false
+
+RUN chmod +x /app/image_server/ComfyUI/entrypoint.sh
+RUN chmod +x /app/image_server/entrypoint.sh
+RUN chmod +x /app/image_server/setup.sh
+
+RUN mkdir /app/cache \
+    && mkdir /app/cache/hub \
+    && chmod -R 777 /app/cache \
+    && chmod -R 777 /app/cache/hub
+
+ENV HF_HOME=/app/cache
+ENV HF_HUB_CACHE=/app/cache/hub
+
+
+#CMD ["sh", "-c", "cd /app/image_server && ./entrypoint.sh"]
+
+
+
+#FROM corcelio/vision:image_server-latest as base
+#
+#RUN mv /app/image_server /app/image_server_old
+##COPY --link ./image_server /app/image_server
+#RUN #mv /app/image_server_old/ComfyUI /app/image_server/
+#RUN #ln -s /app/image_server /app/server
+#
+#VOLUME [ "/app/cache", "/app/server" ]
+#
+#RUN #chmod +x /app/server/setup.sh
+#RUN #chmod +x /app/server/entrypoint.sh
+#RUN #chmod +x /app/server/ComfyUI/entrypoint.sh
+#
+#RUN apt install -y nano
 
 FROM base as setup
 WORKDIR /app
 
-RUN chmod +x /app/server/setup.sh
-RUN /usr/bin/bash /app/server/setup.sh
+RUN #/usr/bin/bash /app/server/setup.sh
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
 
@@ -28,7 +113,5 @@ ENTRYPOINT [ "/app/server/entrypoint.sh" ]
 
 FROM base as comfy
 WORKDIR /app/server/ComfyUI
-
-RUN #chmod +x /app/server/ComfyUI/entrypoint.sh
 
 ENTRYPOINT [ "/app/server/ComfyUI/entrypoint.sh" ]
