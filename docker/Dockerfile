@@ -5,7 +5,7 @@ RUN mv /app/image_server /app/image_server_old
 RUN #mv /app/image_server_old/ComfyUI /app/image_server/
 RUN #ln -s /app/image_server /app/server
 
-VOLUME [ "/app/cache" ]
+VOLUME [ "/app/cache", "/app/server" ]
 
 RUN chmod +x /app/server/setup.sh && \
     chmod +x /app/server/entrypoint.sh
