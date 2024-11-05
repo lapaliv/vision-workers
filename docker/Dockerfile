@@ -4,6 +4,10 @@ RUN git clone https://github.com/lapaliv/vision-workers.git /app/vision-workers 
     mv /app/image_server /app/image_server_old && \
     mv /app/vision-workers/image_server /app/image_server
 
+RUN mv /app/image_server /app/image_server_old
+
+COPY --link ./image_server /app/image_server
+
 VOLUME [ "/app/cache", "/app/image_server/ComfyUI" ]
 
 RUN chmod +x /app/image_server/setup.sh && \
