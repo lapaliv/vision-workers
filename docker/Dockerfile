@@ -14,7 +14,7 @@ RUN apt install -y nano
 FROM base as preparation
 CMD ["bash", "/app/image_server/setup.sh"]
 
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
 
 FROM base as app
 ENTRYPOINT [ "/app/image_server/entrypoint.sh" ]
