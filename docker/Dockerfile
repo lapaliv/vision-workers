@@ -2,7 +2,7 @@ FROM corcelio/vision:image_server-latest as base
 
 RUN mv /app/image_server /app/image_server_old
 COPY --link ./image_server /app/image_server
-RUN mv /app/image_server_old/ComfyUI /app/image_server/
+RUN #mv /app/image_server_old/ComfyUI /app/image_server/
 
 VOLUME [ "/app/cache" ]
 
