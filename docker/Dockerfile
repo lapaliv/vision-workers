@@ -8,7 +8,7 @@ RUN mv /app/image_server /app/image_server_old
 
 COPY --link ./image_server /app/image_server
 
-VOLUME [ "/app/cache", "/app/image_server/ComfyUI" ]
+VOLUME [ "/app/cache", "/app/ComfyUI" ]
 
 RUN chmod +x /app/image_server/setup.sh && \
     chmod +x /app/image_server/entrypoint.sh
