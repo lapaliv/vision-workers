@@ -74,6 +74,7 @@ if [ ! -d ComfyUI ] || [ -z "$(ls -A ComfyUI)" ]; then
   cd ComfyUI
   git fetch --depth 1 origin f7a5107784cded39f92a4bb7553507575e78edbe
   git checkout f7a5107784cded39f92a4bb7553507575e78edbe
+  cp /app/comfy_entrypoint.sh /app/image_server/ComfyUI/comfy_entrypoint.sh
   cd ..
 fi
 

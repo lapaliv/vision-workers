@@ -5,25 +5,28 @@ WORKDIR /app
 ENV DEBIAN_FRONTEND=noninteractive
 
 # PM2
-RUN apt-get update && apt-get install -y curl \
+RUN set -e; \
+    apt-get update && apt-get install -y curl \
     && curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g pm2
 
 # Installing necessary packages
-RUN apt-get update && apt-get install -y wget git
+RUN set -e; apt-get update && apt-get install -y wget git
 
 # Installing Miniconda
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+RUN set -e; \
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
     && chmod 700 Miniconda3-latest-Linux-x86_64.sh \
     && ./Miniconda3-latest-Linux-x86_64.sh -b \
     && rm Miniconda3-latest-Linux-x86_64.sh
 
 ENV PATH="/root/miniconda3/bin:${PATH}"
-RUN conda create -n venv_image python=3.10.13 -y
+RUN set -e; conda create -n venv_image python=3.10.13 -y
 ENV PATH="/root/miniconda3/envs/venv_image/bin:${PATH}"
 
-RUN apt-get update \
+RUN set -e; \
+    apt-get update \
     && apt-get upgrade -y \
     && apt-get -y full-upgrade \
     && apt-get -y install python3-dev \
@@ -47,10 +50,13 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y unzip
+RUN set -e; apt-get update && apt-get install -y unzip
 
 COPY image_server/requirements.txt /app/requirements.txt
-RUN pip install --upgrade pip \
+COPY ComfyUI/entrypoint.sh /app/comfy_entrypoint.sh
+
+RUN set -e; \
+    pip install --upgrade pip \
     && pip install --upgrade pip setuptools==69.5.1 \
     && pip install -r /app/requirements.txt  \
     && pip install huggingface_hub[hf_transfer] \
@@ -67,11 +73,12 @@ ENV DEVICE=0
 ENV VRAM_MODE=--normalvram
 ENV WARMUP=false
 
-RUN chmod +x /app/image_server/ComfyUI/entrypoint.sh
+RUN chmod +x /app/comfy_entrypoint.sh
 RUN chmod +x /app/image_server/entrypoint.sh
 RUN chmod +x /app/image_server/setup.sh
 
-RUN mkdir /app/cache \
+RUN set -e; \
+    mkdir /app/cache \
     && mkdir /app/cache/hub \
     && chmod -R 777 /app/cache \
     && chmod -R 777 /app/cache/hub
@@ -82,7 +89,7 @@ ENV HF_HUB_CACHE=/app/cache/hub
 FROM base as setup
 WORKDIR /app
 
-RUN /usr/bin/bash /app/image_server/setup.sh
+RUN set -e; /usr/bin/bash /app/image_server/setup.sh
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
 
