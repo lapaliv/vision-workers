@@ -16,6 +16,7 @@ services:
     volumes:
       - ./cache:/app/cache
       - ./image_server:/app/image_server
+      - ./ComfyUI:/app/ComfyUI
 
   comfy:
     container_name: comfy
@@ -38,6 +39,7 @@ services:
     volumes:
       - ./cache:/app/cache
       - ./image_server:/app/image_server
+      - ./ComfyUI:/app/ComfyUI
     networks:
       - image_server
 
@@ -63,6 +65,7 @@ services:
     volumes:
       - ./cache:/app/cache
       - ./image_server:/app/image_server
+      - ./ComfyUI:/app/ComfyUI
     networks:
       - image_server
 

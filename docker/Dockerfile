@@ -53,7 +53,6 @@ RUN set -e; \
 RUN set -e; apt-get update && apt-get install -y unzip
 
 COPY image_server/requirements.txt /app/requirements.txt
-COPY ComfyUI/entrypoint.sh /app/comfy_entrypoint.sh
 
 RUN set -e; \
     pip install --upgrade pip \
@@ -73,7 +72,7 @@ ENV DEVICE=0
 ENV VRAM_MODE=--normalvram
 ENV WARMUP=false
 
-RUN chmod +x /app/comfy_entrypoint.sh
+RUN chmod +x /app/ComfyUI/entrypoint.sh
 RUN chmod +x /app/image_server/entrypoint.sh
 RUN chmod +x /app/image_server/setup.sh
 
