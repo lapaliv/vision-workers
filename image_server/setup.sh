@@ -69,14 +69,14 @@ download_file() {
 }
 
 # ComfyUI setup
-if [ ! -d /app/ComfyUI ] || [ -z "$(ls -A /app/ComfyUI)" ]; then
+#if [ ! -d /app/ComfyUI ] || [ -z "$(ls -A /app/ComfyUI)" ]; then
 #  git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git /app/ComfyUI
 #  cd /app/ComfyUI
 #  git fetch --depth 1 origin f7a5107784cded39f92a4bb7553507575e78edbe
 #  git checkout f7a5107784cded39f92a4bb7553507575e78edbe
 #  cp /app/ComfyUI/entrypoint.sh /app/image_server/ComfyUI/comfy_entrypoint.sh
 #  cd /app/image_server
-fi
+#fi
 
 # Download checkpoints
 download_file "/app/ComfyUI/models/checkpoints/juggerinpaint.safetensors" \
