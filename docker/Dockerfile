@@ -63,7 +63,7 @@ RUN set -e; \
     && pip install huggingface_hub[hf_transfer] \
     && rm -rf /root/.cache/pip/*
 
-git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git /app/ComfyUI && \
+RUN git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git /app/ComfyUI && \
     cd /app/ComfyUI && \
     git fetch --depth 1 origin f7a5107784cded39f92a4bb7553507575e78edbe && \
     git checkout f7a5107784cded39f92a4bb7553507575e78edbe
