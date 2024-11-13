@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /app/ComfyUI
+
 vram_mode=${VRAM_MODE:-'--lowvram'}
 warmup=$(echo ${WARMUP:-false} | tr '[:upper:]' '[:lower:]')
 device=${DEVICE:-0}
