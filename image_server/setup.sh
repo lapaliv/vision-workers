@@ -69,32 +69,32 @@ download_file() {
 }
 
 # ComfyUI setup
-if [ ! -d ComfyUI ] || [ -z "$(ls -A ComfyUI)" ]; then 
-  git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git ComfyUI
-  cd ComfyUI
-  git fetch --depth 1 origin f7a5107784cded39f92a4bb7553507575e78edbe
-  git checkout f7a5107784cded39f92a4bb7553507575e78edbe
-  cp /app/ComfyUI/entrypoint.sh /app/image_server/ComfyUI/comfy_entrypoint.sh
-  cd ..
+if [ ! -d /app/ComfyUI ] || [ -z "$(ls -A /app/ComfyUI)" ]; then
+#  git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git /app/ComfyUI
+#  cd /app/ComfyUI
+#  git fetch --depth 1 origin f7a5107784cded39f92a4bb7553507575e78edbe
+#  git checkout f7a5107784cded39f92a4bb7553507575e78edbe
+#  cp /app/ComfyUI/entrypoint.sh /app/image_server/ComfyUI/comfy_entrypoint.sh
+#  cd /app/image_server
 fi
 
 # Download checkpoints
-download_file "ComfyUI/models/checkpoints/juggerinpaint.safetensors" \
+download_file "/app/ComfyUI/models/checkpoints/juggerinpaint.safetensors" \
               "https://huggingface.co/tau-vision/jugger-inpaint/resolve/main/juggerinpaint.safetensors?download=true" \
               "https://huggingface.co/tau-vision/jugger-inpaint" \
               "juggerinpaint.safetensors"
 
-download_file "ComfyUI/models/checkpoints/dreamshaperturbo.safetensors" \
+download_file "/app/ComfyUI/models/checkpoints/dreamshaperturbo.safetensors" \
               "https://huggingface.co/Lykon/dreamshaper-xl-v2-turbo/resolve/main/DreamShaperXL_Turbo_v2_1.safetensors?download=true" \
               "https://huggingface.co/Lykon/dreamshaper-xl-v2-turbo" \
               "DreamShaperXL_Turbo_v2_1.safetensors"
 
-download_file "ComfyUI/models/checkpoints/proteus.safetensors" \
+download_file "/app/ComfyUI/models/checkpoints/proteus.safetensors" \
               "https://huggingface.co/dataautogpt3/ProteusV0.4-Lightning/resolve/main/ProteusV0.4-Lighting.safetensors?download=true" \
               "https://huggingface.co/dataautogpt3/ProteusV0.4-Lightning" \
               "ProteusV0.4-Lighting.safetensors"
 
-download_file "ComfyUI/models/checkpoints/playground.safetensors" \
+download_file "/app/ComfyUI/models/checkpoints/playground.safetensors" \
               "https://huggingface.co/playgroundai/playground-v2.5-1024px-aesthetic/resolve/main/playground-v2.5-1024px-aesthetic.fp16.safetensors?download=true" \
               "https://huggingface.co/playgroundai/playground-v2.5-1024px-aesthetic" \
               "playground-v2.5-1024px-aesthetic.fp16.safetensors"
@@ -102,56 +102,56 @@ download_file "ComfyUI/models/checkpoints/playground.safetensors" \
 
 # Download flux models
 
-download_file "ComfyUI/models/clip/t5xxl_fp8_e4m3fn.safetensors" \
+download_file "/app/ComfyUI/models/clip/t5xxl_fp8_e4m3fn.safetensors" \
               "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors" \
               "https://huggingface.co/comfyanonymous/flux_text_encoders/" \
               "t5xxl_fp8_e4m3fn.safetensors"
 
-download_file "ComfyUI/models/clip/clip_l.safetensors" \
+download_file "/app/ComfyUI/models/clip/clip_l.safetensors" \
               "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors" \
               "https://huggingface.co/comfyanonymous/flux_text_encoders/" \
               "clip_l.safetensors"
 
-download_file "ComfyUI/models/vae/ae.sft" \
+download_file "/app/ComfyUI/models/vae/ae.sft" \
               "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/ae.safetensors" \
               "https://huggingface.co/black-forest-labs/FLUX.1-schnell/" \
               "ae.safetensors"
 
-download_file "ComfyUI/models/unet/flux1-schnell.sft" \
+download_file "/app/ComfyUI/models/unet/flux1-schnell.sft" \
               "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors" \
               "https://huggingface.co/black-forest-labs/FLUX.1-schnell/" \
               "flux1-schnell.safetensors"
 
 
 # Download embeddings
-download_file "ComfyUI/models/embeddings/negativeXL_A.safetensors" \
+download_file "/app/ComfyUI/models/embeddings/negativeXL_A.safetensors" \
               "https://huggingface.co/gsdf/CounterfeitXL/resolve/main/embeddings/negativeXL_A.safetensors?download=true" \
               "https://huggingface.co/gsdf/CounterfeitXL" \
               "embeddings/negativeXL_A.safetensors"
 
 # Download VAE
-download_file "ComfyUI/models/vae/sdxl_vae.safetensors" \
+download_file "/app/ComfyUI/models/vae/sdxl_vae.safetensors" \
               "https://huggingface.co/madebyollin/sdxl-vae-fp16-fix/resolve/main/sdxl.vae.safetensors?download=true" \
               "https://huggingface.co/madebyollin/sdxl-vae-fp16-fix" \
               "sdxl.vae.safetensors"
 
 
 # Set up input images
-[ -f ComfyUI/input/init.png ] || mv ComfyUI/input/example.png ComfyUI/input/init.png
-[ -f ComfyUI/input/mask.png ] || cp ComfyUI/input/init.png ComfyUI/input/mask.png
+[ -f /app/ComfyUI/input/init.png ] || mv /app/ComfyUI/input/example.png /app/ComfyUI/input/init.png
+[ -f /app/ComfyUI/input/mask.png ] || cp /app/ComfyUI/input/init.png /app/ComfyUI/input/mask.png
 
 # Custom nodes setup
-cd ComfyUI/custom_nodes
+cd /app/ComfyUI/custom_nodes
 
-if [ ! -d ComfyUI-Inspire-Pack ] || [ -z "$(ls -A ComfyUI-Inspire-Pack)" ]; then 
-  git clone https://github.com/ltdrdata/ComfyUI-Inspire-Pack
+if [ ! -d ComfyUI-Inspire-Pack ] || [ -z "$(ls -A ComfyUI-Inspire-Pack)" ]; then
+  git clone https://github.com/ltdrdata/ComfyUI-Inspire-Pack ComfyUI-Inspire-Pack
   cd ComfyUI-Inspire-Pack
   git checkout 985f6a239b1aed0c67158f64bf579875ec292cb2
   cd ..
 fi
 
-if [ ! -d ComfyUI_IPAdapter_plus ] || [ -z "$(ls -A ComfyUI_IPAdapter_plus)" ]; then 
-  git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus
+if [ ! -d ComfyUI_IPAdapter_plus ] || [ -z "$(ls -A ComfyUI_IPAdapter_plus)" ]; then
+  git clone https://github.com/cubiq/ComfyUI_IPAdapter_plus ComfyUI_IPAdapter_plus
   cd ComfyUI_IPAdapter_plus
   git checkout 0d0a7b3693baf8903fe2028ff218b557d619a93d
   cd ..
@@ -168,8 +168,8 @@ fi
 
 cd ../..
 
-mkdir -p ComfyUI/models/insightface/models
-cd ComfyUI/models/insightface/models
+mkdir -p /app/ComfyUI/models/insightface/models
+cd /app/ComfyUI/models/insightface/models
 
 download_file "antelopev2.zip" \
               "https://huggingface.co/tau-vision/insightface-antelopev2/resolve/main/antelopev2.zip" \
@@ -181,8 +181,8 @@ download_file "antelopev2.zip" \
 cd ../../../..
 
 # InstantID models setup
-mkdir -p ComfyUI/models/instantid
-cd ComfyUI/models/instantid
+mkdir -p /app/ComfyUI/models/instantid
+cd /app/ComfyUI/models/instantid
 
 download_file "ip-adapter.bin" \
               "https://huggingface.co/InstantX/InstantID/resolve/main/ip-adapter.bin?download=true" \
@@ -192,8 +192,8 @@ download_file "ip-adapter.bin" \
 cd ../../..
 
 # ControlNet setup
-mkdir -p ComfyUI/models/controlnet
-cd ComfyUI/models/controlnet
+mkdir -p /app/ComfyUI/models/controlnet
+cd /app/ComfyUI/models/controlnet
 
 download_file "diffusion_pytorch_model.safetensors" \
               "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors?download=true" \

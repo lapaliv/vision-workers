@@ -53,6 +53,7 @@ RUN set -e; \
 RUN set -e; apt-get update && apt-get install -y unzip
 
 COPY image_server/requirements.txt /app/requirements.txt
+COPY image_server/entrypoint_comfyui.sh /app/requirements.txt
 
 RUN set -e; \
     pip install --upgrade pip \
@@ -61,7 +62,13 @@ RUN set -e; \
     && pip install huggingface_hub[hf_transfer] \
     && rm -rf /root/.cache/pip/*
 
+git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git /app/ComfyUI && \
+    cd /app/ComfyUI && \
+    git fetch --depth 1 origin f7a5107784cded39f92a4bb7553507575e78edbe && \
+    git checkout f7a5107784cded39f92a4bb7553507575e78edbe
+
 COPY --link image_server /app/image_server
+COPY image_server/entrypoint_comfyui.sh /app/ComfyUI/entrypoint.sh
 
 ENV APP_HOST=0.0.0.0
 ENV APP_PORT=8080
@@ -72,8 +79,8 @@ ENV DEVICE=0
 ENV VRAM_MODE=--normalvram
 ENV WARMUP=false
 
-RUN chmod +x /app/image_server/entrypoint.sh
-RUN chmod +x /app/image_server/setup.sh
+RUN #chmod +x /app/image_server/entrypoint.sh
+RUN #chmod +x /app/image_server/setup.sh
 
 RUN set -e; \
     mkdir /app/cache \
@@ -97,6 +104,6 @@ WORKDIR /app/image_server
 ENTRYPOINT [ "/app/image_server/entrypoint.sh" ]
 
 FROM base as comfy
-WORKDIR /app/image_server/ComfyUI
+WORKDIR /app/ComfyUI
 
-ENTRYPOINT [ "/app/image_server/ComfyUI/entrypoint.sh" ]
+ENTRYPOINT [ "/app/ComfyUI/entrypoint.sh" ]
