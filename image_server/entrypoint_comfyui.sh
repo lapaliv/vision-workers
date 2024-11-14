@@ -1,10 +1,11 @@
 #!/bin/bash
 
+set -e;
+
 cd /app/image_server
 /usr/bin/bash setup.sh
 
 cd /app/ComfyUI
-
 
 
 vram_mode=${VRAM_MODE:-'--lowvram'}
