@@ -70,4 +70,6 @@ services:
       - net
 
 networks:
-  net
+  net:
+    name: net
+    external: true
