@@ -40,8 +40,6 @@ services:
       - 8188
     volumes:
       - .:/app
-    networks:
-      - host
 
   app:
     container_name: app
@@ -66,5 +64,3 @@ services:
       - 8888
     volumes:
       - .:/app
-    networks:
-      - host
