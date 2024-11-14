@@ -36,6 +36,8 @@ services:
     restart: always
     ports:
       - 8188:8188
+    expose:
+      - 8188
     volumes:
       - .:/app
     networks:
@@ -60,6 +62,8 @@ services:
       - comfy
     ports:
       - ${PORT:-8888}:8888
+    expose:
+      - 8888
     volumes:
       - .:/app
     networks:
