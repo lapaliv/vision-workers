@@ -164,10 +164,6 @@ if [ ! -d ComfyUI_InstantID ] || [ -z "$(ls -A ComfyUI_InstantID)" ]; then
   cd ..
 fi
 
-
-
-cd ../..
-
 mkdir -p /app/ComfyUI/models/insightface/models
 cd /app/ComfyUI/models/insightface/models
 
@@ -178,8 +174,6 @@ download_file "antelopev2.zip" \
 
 [ -d antelopev2 ] || unzip antelopev2.zip
 
-cd ../../../..
-
 # InstantID models setup
 mkdir -p /app/ComfyUI/models/instantid
 cd /app/ComfyUI/models/instantid
@@ -189,8 +183,6 @@ download_file "ip-adapter.bin" \
               "https://huggingface.co/InstantX/InstantID" \
               "ip-adapter.bin"
 
-cd ../../..
-
 # ControlNet setup
 mkdir -p /app/ComfyUI/models/controlnet
 cd /app/ComfyUI/models/controlnet
@@ -199,7 +191,5 @@ download_file "diffusion_pytorch_model.safetensors" \
               "https://huggingface.co/InstantX/InstantID/resolve/main/ControlNetModel/diffusion_pytorch_model.safetensors?download=true" \
               "https://huggingface.co/InstantX/InstantID" \
               "ControlNetModel/diffusion_pytorch_model.safetensors"
-
-cd ../../..
 
 echo "Setup completed successfully."
