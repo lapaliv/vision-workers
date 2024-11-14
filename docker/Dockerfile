@@ -63,7 +63,6 @@ RUN set -e; \
     && rm -rf /root/.cache/pip/*
 
 COPY --link image_server /app/image_server
-COPY image_server/entrypoint_comfyui.sh /app/ComfyUI/entrypoint.sh
 
 ENV APP_HOST=0.0.0.0
 ENV APP_PORT=8080
@@ -99,6 +98,5 @@ WORKDIR /app/image_server
 ENTRYPOINT [ "/app/image_server/entrypoint.sh" ]
 
 FROM base as comfy
-WORKDIR /app/ComfyUI
 
 ENTRYPOINT [ "/app/image_server/entrypoint_comfyui.sh" ]
