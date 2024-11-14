@@ -13,8 +13,8 @@ if [ ! -d /app/ComfyUI ] || [ -z "$(ls -A /app/ComfyUI)" ]; then
   git checkout f7a5107784cded39f92a4bb7553507575e78edbe
 fi
 
-cd /app/image_server
-/usr/bin/bash setup.sh
+#cd /app/image_server
+#/usr/bin/bash setup.sh
 
 cd /app/ComfyUI
 
