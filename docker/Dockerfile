@@ -53,13 +53,7 @@ RUN set -e; \
 
 RUN set -e; apt-get update && apt-get install -y unzip
 
-RUN git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git /app/ComfyUI && \
-    cd /app/ComfyUI && \
-    git fetch --depth 1 origin f7a5107784cded39f92a4bb7553507575e78edbe && \
-    git checkout f7a5107784cded39f92a4bb7553507575e78edbe
-
 COPY image_server/requirements.txt /app/requirements.txt
-COPY image_server/entrypoint_comfyui.sh /app/ComfyUI/entrypoint_comfyui.sh
 
 RUN set -e; \
     pip install --upgrade pip \

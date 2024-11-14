@@ -2,6 +2,11 @@
 
 set -e;
 
+git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git /app/ComfyUI
+cd /app/ComfyUI
+git fetch --depth 1 origin f7a5107784cded39f92a4bb7553507575e78edbe
+git checkout f7a5107784cded39f92a4bb7553507575e78edbe
+
 cd /app/image_server
 /usr/bin/bash setup.sh
 
