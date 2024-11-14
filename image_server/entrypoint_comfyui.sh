@@ -18,6 +18,7 @@ cd /app/image_server
 
 cd /app/ComfyUI
 
+pip install -r requirements.txt
 
 vram_mode=${VRAM_MODE:-'--lowvram'}
 warmup=$(echo ${WARMUP:-false} | tr '[:upper:]' '[:lower:]')
