@@ -22,9 +22,9 @@ cd /app/ComfyUI
 pip install -r requirements.txt
 if [ -n "$vram_mode" ]
 then
-    python main.py $vram_mode --cuda-device $device --disable-xformers --port $port --listen 127.0.0.1 &
+    python main.py $vram_mode --cuda-device $device --disable-xformers --port $port --listen 127.0.0.1 > /app/ComfyUI.txt &
 else
-    python main.py --disable-xformers  --cuda-device $device --port $port --listen 127.0.0.1 &
+    python main.py --disable-xformers  --cuda-device $device --port $port --listen 127.0.0.1 > /app/ComfyUI.txt &
 fi
 
 cd /app/image_server
