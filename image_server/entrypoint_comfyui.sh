@@ -32,4 +32,5 @@ else
     python main.py --cuda-device $device --port $port --listen 127.0.0.1
 fi
 
+echo "Finish"
 #cleanup
