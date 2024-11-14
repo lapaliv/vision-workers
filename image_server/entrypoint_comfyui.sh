@@ -21,15 +21,14 @@ cd /app/ComfyUI
 pip install -r requirements.txt
 
 vram_mode=${VRAM_MODE:-'--lowvram'}
-warmup=$(echo ${WARMUP:-false} | tr '[:upper:]' '[:lower:]')
 device=${DEVICE:-0}
-port=${PORT:-6919}
+port=${PORT:-8188}
 
 if [ -n "$vram_mode" ]
 then
-    python main.py $vram_mode --cuda-device $device --disable-xformers
+    python main.py $vram_mode --cuda-device $device --disable-xformers --port $port --listen 127.0.0.1
 else
-    python main.py --disable-xformers  --cuda-device $device
+    python main.py --disable-xformers  --cuda-device $device --port $port --listen 127.0.0.1
 fi
 
 #cleanup
