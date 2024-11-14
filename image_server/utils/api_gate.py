@@ -14,7 +14,7 @@ import websocket
 
 from loguru import logger
 
-server_address = "comfy:8188"
+server_address = "127.0.0.1:8188"
 client_id = str(uuid.uuid4())
 ws = websocket.WebSocket()
 
