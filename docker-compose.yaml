@@ -18,30 +18,30 @@ services:
 #      - ./image_server:/app/image_server
 #      - ./ComfyUI:/app/ComfyUI
 
-  comfy:
-    container_name: comfy
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile
-      target: comfy
-    image: comfy
-#    depends_on:
-#      - setup
-    environment:
-      PORT: ${PORT:-8188}
-      DEVICE: ${DEVICE:-0}
-      VRAM_MODE: ${VRAM_MODE:---normalvram}
-      WARMUP: ${WARMUP:-true}
-    working_dir: /app/ComfyUI
-    restart: always
-    ports:
-      - 8188:8188
-    expose:
-      - 8188
-    volumes:
-      - .:/app
-    networks:
-      - net
+#  comfy:
+#    container_name: comfy
+#    build:
+#      context: ./
+#      dockerfile: ./docker/Dockerfile
+#      target: comfy
+#    image: comfy
+##    depends_on:
+##      - setup
+#    environment:
+#      PORT: ${PORT:-8188}
+#      DEVICE: ${DEVICE:-0}
+#      VRAM_MODE: ${VRAM_MODE:---normalvram}
+#      WARMUP: ${WARMUP:-true}
+#    working_dir: /app/ComfyUI
+#    restart: always
+#    ports:
+#      - ${PORT:-8188}:8188
+#    expose:
+#      - 8188
+#    volumes:
+#      - .:/app
+##    networks:
+##      - net
 
   app:
     container_name: app
@@ -66,10 +66,10 @@ services:
       - 8888
     volumes:
       - .:/app
-    networks:
-      - net
+#    networks:
+#      - net
 
-networks:
-  net:
-    name: net
-    external: true
+#networks:
+#  net:
+#    name: net
+#    external: true
