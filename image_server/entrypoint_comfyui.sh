@@ -2,7 +2,7 @@
 
 set -e;
 
-if [ ! -d /app/ComfyUI ]; then
+if [ -d /app/ComfyUI ] && [ -z "$(ls -A /app/ComfyUI)" ]; then
   rm -rf /app/ComfyUI
 fi
 
