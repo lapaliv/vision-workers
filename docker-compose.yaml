@@ -41,7 +41,7 @@ services:
     volumes:
       - .:/app
     networks:
-      - image_server
+      - host
 
   app:
     container_name: app
@@ -67,9 +67,4 @@ services:
     volumes:
       - .:/app
     networks:
-      - image_server
-
-networks:
-  image_server:
-    name: image_server
-    external: true
+      - host
