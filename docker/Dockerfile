@@ -107,4 +107,4 @@ ENTRYPOINT [ "/app/image_server/entrypoint.sh" ]
 FROM base as comfy
 WORKDIR /app/ComfyUI
 
-ENTRYPOINT [ "/app/ComfyUI/entrypoint.sh" ]
+ENTRYPOINT [ "/app/image_server/entrypoint_comfyui.sh" ]
