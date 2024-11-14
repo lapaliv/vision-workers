@@ -18,14 +18,14 @@ warmup=$(echo ${WARMUP:-false} | tr '[:upper:]' '[:lower:]')
 device=${DEVICE:-0}
 port=${PORT:-6919}
 
-cd /app/ComfyUI
-pip install -r requirements.txt
-if [ -n "$vram_mode" ]
-then
-    python main.py $vram_mode --cuda-device $device --disable-xformers --port 8188 --listen 127.0.0.1 > /app/ComfyUI.txt &
-else
-    python main.py --disable-xformers  --cuda-device $device --port 8188 --listen 127.0.0.1 > /app/ComfyUI.txt &
-fi
+#cd /app/ComfyUI
+#pip install -r requirements.txt
+#if [ -n "$vram_mode" ]
+#then
+#    python main.py $vram_mode --cuda-device $device --disable-xformers --port 8188 --listen 127.0.0.1 > /app/ComfyUI.txt &
+#else
+#    python main.py --disable-xformers  --cuda-device $device --port 8188 --listen 127.0.0.1 > /app/ComfyUI.txt &
+#fi
 
 cd /app/image_server
 

@@ -26,9 +26,10 @@ port=${PORT:-8188}
 
 if [ -n "$vram_mode" ]
 then
+    python main.py $vram_mode --cuda-device $device --port $port --listen 127.0.0.1
     python main.py $vram_mode --cuda-device $device --disable-xformers --port $port --listen 127.0.0.1
 else
-    python main.py --disable-xformers  --cuda-device $device --port $port --listen 127.0.0.1
+    python main.py --cuda-device $device --port $port --listen 127.0.0.1
 fi
 
 #cleanup
