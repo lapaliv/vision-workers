@@ -28,6 +28,11 @@ port=${PORT:-6919}
 
 cd /app/ComfyUI
 pip install -r requirements.txt
+
+cd /app/image_server
+/usr/bin/bash setup.sh
+cd /app/ComfyUI
+
 if [ -n "$vram_mode" ]
 then
     python main.py $vram_mode --cuda-device $device --disable-xformers --port 8188 --listen 127.0.0.1 &
