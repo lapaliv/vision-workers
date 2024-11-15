@@ -1,22 +1,30 @@
 #!/bin/bash
-#cleanup() {
-#    echo "Stopping the ComfyUI server..."
-#    kill $COMFY_SERVER_PID
-#    wait $COMFY_SERVER_PID 2>/dev/null
-#    echo "Both servers have been stopped."
-#}
 
-#trap cleanup SIGINT SIGTERM
+set -e;
 
-#echo "Starting the image server. First i'll download all the models..."
-# tODO: remove this
-#chmod +x setup.sh
-#./setup.sh
+if [ -d /app/ComfyUI ] && [ -z "$(ls -A /app/ComfyUI)" ]; then
+  rm -rf /app/ComfyUI
+fi
+
+if [ ! -d /app/ComfyUI ] || [ -z "$(ls -A /app/ComfyUI)" ]; then
+  git clone --depth 1 https://github.com/comfyanonymous/ComfyUI.git /app/ComfyUI
+  cd /app/ComfyUI
+  git fetch --depth 1 origin f7a5107784cded39f92a4bb7553507575e78edbe
+  git checkout f7a5107784cded39f92a4bb7553507575e78edbe
+fi
 
 vram_mode=${VRAM_MODE:-'--lowvram'}
 warmup=$(echo ${WARMUP:-false} | tr '[:upper:]' '[:lower:]')
 device=${DEVICE:-0}
 port=${PORT:-6919}
+
+#if [ -n "$vram_mode" ]
+#then
+#    python main.py $vram_mode --cuda-device $device --port $port --listen 127.0.0.1 &
+##    python main.py $vram_mode --cuda-device $device --disable-xformers --port $port --listen 127.0.0.1
+#else
+#    python main.py --cuda-device $device --port $port --listen 127.0.0.1 &
+#fi
 
 cd /app/ComfyUI
 pip install -r requirements.txt
