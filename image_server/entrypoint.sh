@@ -18,6 +18,8 @@ warmup=$(echo ${WARMUP:-false} | tr '[:upper:]' '[:lower:]')
 device=${DEVICE:-0}
 port=${PORT:-6919}
 
+echo "vram_mode=${vram_mode}, warmup=${warmup}, device=${device}, port=${port}"
+
 #if [ -n "$vram_mode" ]
 #then
 #    python main.py $vram_mode --cuda-device $device --port $port --listen 127.0.0.1 &
